@@ -1,0 +1,24 @@
+SETUP NOTE — Important first step after extracting
+====================================================
+
+A couple of files were renamed in the zip so Windows could extract them.
+After you extract the archive, rename them back:
+
+   dishcraft/frontend/GITIGNORE.txt
+       → rename to: .gitignore
+
+   dishcraft/backend/uploads/UPLOADS_HTACCESS.txt
+       → rename to: .htaccess
+
+(The .htaccess one is the most important — it blocks PHP execution
+inside the uploads folder for security. The .gitignore is only needed
+if you put the project under git.)
+
+On Windows: right-click → Rename. If Windows hides the extension,
+turn on "File name extensions" in File Explorer's View menu first.
+
+On Mac/Linux:
+   mv dishcraft/frontend/GITIGNORE.txt dishcraft/frontend/.gitignore
+   mv dishcraft/backend/uploads/UPLOADS_HTACCESS.txt dishcraft/backend/uploads/.htaccess
+
+After that, follow the normal setup in README.md.

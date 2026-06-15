@@ -1,0 +1,16 @@
+# Serve all uploads with CORS (images + GLB models).
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# GLB files need the correct MIME type so Three.js / useGLTF loads them.
+<IfModule mod_mime.c>
+    AddType model/gltf-binary .glb
+</IfModule>
+
+# Block PHP execution inside the uploads folder for safety.
+<FilesMatch "\.(php|phtml|phps|cgi)$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes
