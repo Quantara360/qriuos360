@@ -38,11 +38,5 @@ Thumbs.db
 # Docker volumes / overrides
 docker-compose.override.yml
 
-# Large video assets (store separately / use Git LFS if needed)
-*.mov
-*.mp4
-*.webm
-*.avi
-
 # SSL certificates
 dishcraft/frontend/certs/
