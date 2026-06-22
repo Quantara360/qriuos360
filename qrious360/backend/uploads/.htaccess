@@ -1,0 +1,21 @@
+# Allow images in this folder to be served directly.
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+
+    # All upload filenames embed a content hash, so content never changes
+    # for a given URL. One-year cache is safe; browsers re-fetch on new URL.
+    Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>
+
+# Fallback for servers where mod_headers is absent but mod_expires is present.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 year"
+</IfModule>
+
+# Block PHP execution inside the uploads folder for safety.
+<FilesMatch "\.(php|phtml|phps|cgi)$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes

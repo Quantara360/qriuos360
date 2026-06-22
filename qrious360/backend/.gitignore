@@ -1,0 +1,7 @@
+# Uploaded user content (images, videos) — stored outside git
+uploads/*
+!uploads/.htaccess
+
+# Local env overrides
+.env
+.env.local
