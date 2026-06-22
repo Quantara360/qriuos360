@@ -3,10 +3,10 @@ FROM node:20-alpine AS frontend
 
 WORKDIR /app
 
-COPY dishcraft/frontend/package*.json ./
+COPY qrious360/frontend/package*.json ./
 RUN npm ci --prefer-offline
 
-COPY dishcraft/frontend .
+COPY qrious360/frontend .
 
 # Build production bundle (HTTPS/basicSsl plugin is dev-only, ignored at build)
 RUN npm run build
