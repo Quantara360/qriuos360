@@ -467,9 +467,47 @@ function save_video(array $file): string {
     if (!isset($allowed[$mime])) fail('Only MP4, WebM and MOV videos are allowed', 415);
     if ($file['size'] > 200 * 1024 * 1024) fail('Video must be smaller than 200 MB', 413);
 
-    $ext  = $allowed[$mime];
-    $name = 'video_' . bin2hex(random_bytes(8)) . '.' . $ext;
+    // Always output as MP4 — browser-compatible and seekable
+    $name = 'video_' . bin2hex(random_bytes(8)) . '.mp4';
     $dest = __DIR__ . '/../uploads/' . $name;
+
+    // Try FFmpeg: re-encode to web-ready H.264 MP4 (faststart + ~1.5 Mbps + max 960p).
+    // faststart moves the moov atom to the front so browsers can seek before full download.
+    $ffmpeg = ffmpeg_path();
+    if ($ffmpeg) {
+        $tmp = $file['tmp_name'];
+        $cmd = sprintf(
+            '%s -i %s -c:v libx264 -crf 26 -preset fast'
+            . ' -vf "scale=960:540:force_original_aspect_ratio=decrease,pad=960:540:(ow-iw)/2:(oh-ih)/2:black"'
+            . ' -an -movflags +faststart -y %s 2>/dev/null',
+            escapeshellarg($ffmpeg),
+            escapeshellarg($tmp),
+            escapeshellarg($dest)
+        );
+        exec($cmd, $_, $code);
+        if ($code === 0 && file_exists($dest) && filesize($dest) > 1000) {
+            return $name;
+        }
+        // FFmpeg failed — fall through to plain save
+        if (file_exists($dest)) @unlink($dest);
+    }
+
+    // Fallback: save raw (no optimisation)
     if (!move_uploaded_file($file['tmp_name'], $dest)) fail('Failed to save video', 500);
     return $name;
+}
+
+function ffmpeg_path(): string {
+    $candidates = [
+        getenv('FFMPEG_PATH') ?: '',
+        '/usr/bin/ffmpeg',
+        '/usr/local/bin/ffmpeg',
+        'ffmpeg',
+    ];
+    foreach ($candidates as $p) {
+        if ($p && (is_executable($p) || trim((string)shell_exec("which $p 2>/dev/null")))) {
+            return $p ?: trim((string)shell_exec("which ffmpeg 2>/dev/null"));
+        }
+    }
+    return '';
 }
