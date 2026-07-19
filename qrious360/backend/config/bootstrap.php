@@ -15,7 +15,8 @@ if (in_array($origin, $allowed, true)) {
     header('Access-Control-Allow-Credentials: true');
 }
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, Accept');
+header('Access-Control-Max-Age: 86400');   // cache preflight 24 h — eliminates the extra round-trip on every mobile request
 header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
