@@ -39,3 +39,24 @@ RUN mkdir -p /uploads /uploads/jobs \
     && chmod -R 755 /var/www/html
 
 EXPOSE 80
+
+# ── Traefik CORS fix ─────────────────────────────────────────────────────────
+# Dokploy's auto-generated Traefik middleware sets Access-Control-Max-Age:0,
+# forcing a CORS preflight before every cross-origin request. This higher-priority
+# router (1000 vs Dokploy default) replaces those CORS headers with correct values
+# so browsers cache the preflight for 24 hours — halving round-trips on mobile.
+# The existing Let's Encrypt cert in Traefik's ACME store is reused (tls:true
+# without certresolver picks it up automatically from Traefik's cert store).
+LABEL traefik.enable=true
+LABEL traefik.http.routers.phpapi-cors.rule=Host(`api.qrious360.cloud`)
+LABEL traefik.http.routers.phpapi-cors.entrypoints=websecure
+LABEL traefik.http.routers.phpapi-cors.tls=true
+LABEL traefik.http.routers.phpapi-cors.priority=1000
+LABEL traefik.http.routers.phpapi-cors.service=phpapi-cors-svc
+LABEL traefik.http.services.phpapi-cors-svc.loadbalancer.server.port=80
+LABEL traefik.http.middlewares.phpapi-cors-mw.headers.accessControlAllowOriginList=https://qrious360.cloud
+LABEL traefik.http.middlewares.phpapi-cors-mw.headers.accessControlAllowMethods=GET,POST,PUT,DELETE,OPTIONS
+LABEL traefik.http.middlewares.phpapi-cors-mw.headers.accessControlAllowHeaders=Content-Type,Authorization,Accept
+LABEL traefik.http.middlewares.phpapi-cors-mw.headers.accessControlAllowCredentials=true
+LABEL traefik.http.middlewares.phpapi-cors-mw.headers.accessControlMaxAge=86400
+LABEL traefik.http.routers.phpapi-cors.middlewares=phpapi-cors-mw
