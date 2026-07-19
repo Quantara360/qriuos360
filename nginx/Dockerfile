@@ -15,6 +15,9 @@ RUN npm run build
 FROM nginx:1.27-alpine
 
 COPY --from=frontend /app/dist /usr/share/nginx/html
+
+# Bust the layer cache so nginx.conf is always re-copied on each build.
+ARG NGINX_CONF_VERSION=2
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Remove default nginx config
