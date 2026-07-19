@@ -9,7 +9,13 @@
 // In XAMPP dev: falls back to Vite dev server origins.
 $origin  = $_SERVER['HTTP_ORIGIN'] ?? '';
 $rawOrigins = getenv('ALLOWED_ORIGINS') ?: 'http://localhost:5173,http://127.0.0.1:5173';
-$allowed = array_filter(array_map('trim', explode(',', $rawOrigins)));
+$allowed = array_values(array_filter(array_map('trim', explode(',', $rawOrigins))));
+// Auto-include www. variants so https://www.example.com is allowed when https://example.com is listed.
+foreach ($allowed as $o) {
+    if (str_starts_with($o, 'https://') && !str_starts_with($o, 'https://www.')) {
+        $allowed[] = 'https://www.' . substr($o, 8);
+    }
+}
 if (in_array($origin, $allowed, true)) {
     header("Access-Control-Allow-Origin: $origin");
     header('Access-Control-Allow-Credentials: true');
