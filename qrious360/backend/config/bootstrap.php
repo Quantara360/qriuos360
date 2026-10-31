@@ -1,6 +1,6 @@
 <?php
 // =====================================================
-// Bootstrap — included by every endpoint.
+// Bootstrap, included by every endpoint.
 // Handles CORS, session, JSON I/O, and role guards.
 // =====================================================
 
@@ -22,7 +22,7 @@ if (in_array($origin, $allowed, true)) {
 }
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, Accept');
-header('Access-Control-Max-Age: 86400');   // cache preflight 24 h — eliminates the extra round-trip on every mobile request
+header('Access-Control-Max-Age: 86400');   // cache preflight 24 h, eliminates the extra round-trip on every mobile request
 header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -125,7 +125,7 @@ function save_image_as_webp(
 
     $uploadDir = __DIR__ . '/../uploads/';
 
-    // GD path — converts and resizes to WebP
+    // GD path, converts and resizes to WebP
     if (function_exists('imagewebp')) {
         $src = match($mime) {
             'image/jpeg' => @imagecreatefromjpeg($file['tmp_name']),

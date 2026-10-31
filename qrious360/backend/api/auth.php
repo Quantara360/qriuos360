@@ -236,7 +236,7 @@ function save_logo(array $file): string {
 }
 
 function save_banner(array $file): string {
-    // Banners span the hotel page header — cap at 1400 × 700.
+    // Banners span the hotel page header, cap at 1400 × 700.
     return save_image_as_webp($file, 'banner_', 1400, 700, 82, 8 * 1024 * 1024);
 }
 

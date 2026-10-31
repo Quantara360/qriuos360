@@ -44,7 +44,7 @@ EXPOSE 80
 # Dokploy's auto-generated Traefik middleware sets Access-Control-Max-Age:0,
 # forcing a CORS preflight before every cross-origin request. This higher-priority
 # router (1000 vs Dokploy default) replaces those CORS headers with correct values
-# so browsers cache the preflight for 24 hours — halving round-trips on mobile.
+# so browsers cache the preflight for 24 hours, halving round-trips on mobile.
 # The existing Let's Encrypt cert in Traefik's ACME store is reused (tls:true
 # without certresolver picks it up automatically from Traefik's cert store).
 LABEL traefik.enable=true

@@ -1,4 +1,4 @@
-# Uploaded user content (images, videos) — stored outside git
+# Uploaded user content (images, videos), stored outside git
 uploads/*
 !uploads/.htaccess
 

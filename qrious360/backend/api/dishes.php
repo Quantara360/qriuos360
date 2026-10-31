@@ -149,7 +149,7 @@ function handle_create(): void {
     $user = require_role('owner', 'admin');
     if (method() !== 'POST') fail('Method not allowed', 405);
 
-    // Quota check — admins are exempt
+    // Quota check, admins are exempt
     if ($user['role'] === 'owner') {
         $qs = db()->prepare('SELECT dish_quota FROM users WHERE id = ?');
         $qs->execute([$user['id']]);
@@ -457,7 +457,7 @@ function save_ingredients(int $dishId, array $ingredients): void {
 }
 
 function save_upload(array $file): string {
-    // Converts to WebP and caps at 900 px — dish cards never display wider than that.
+    // Converts to WebP and caps at 900 px, dish cards never display wider than that.
     return save_image_as_webp($file, '', 900, 900, 82, 8 * 1024 * 1024);
 }
 
@@ -467,7 +467,7 @@ function save_video(array $file): string {
     if (!isset($allowed[$mime])) fail('Only MP4, WebM and MOV videos are allowed', 415);
     if ($file['size'] > 200 * 1024 * 1024) fail('Video must be smaller than 200 MB', 413);
 
-    // Always output as MP4 — browser-compatible and seekable
+    // Always output as MP4, browser-compatible and seekable
     $name = 'video_' . bin2hex(random_bytes(8)) . '.mp4';
     $dest = __DIR__ . '/../uploads/' . $name;
 
@@ -488,7 +488,7 @@ function save_video(array $file): string {
         if ($code === 0 && file_exists($dest) && filesize($dest) > 1000) {
             return $name;
         }
-        // FFmpeg failed — fall through to plain save
+        // FFmpeg failed, fall through to plain save
         if (file_exists($dest)) @unlink($dest);
     }
 

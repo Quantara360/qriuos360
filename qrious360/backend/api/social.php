@@ -19,7 +19,7 @@ switch ($action) {
 }
 
 // ----------------------------------------------------------
-// GET — list dishes the current customer has favorited
+// GET, list dishes the current customer has favorited
 // ----------------------------------------------------------
 function handle_list_favorites(): void {
     $user = require_role('customer');
@@ -41,7 +41,7 @@ function handle_list_favorites(): void {
 }
 
 // ----------------------------------------------------------
-// POST — toggle favorite (add or remove)
+// POST, toggle favorite (add or remove)
 // ----------------------------------------------------------
 function handle_toggle_favorite(): void {
     $user = require_role('customer');
@@ -64,7 +64,7 @@ function handle_toggle_favorite(): void {
 }
 
 // ----------------------------------------------------------
-// POST — add or update a review
+// POST, add or update a review
 // ----------------------------------------------------------
 function handle_add_review(): void {
     $user = require_role('customer');
@@ -107,7 +107,7 @@ function handle_add_review(): void {
 }
 
 // ----------------------------------------------------------
-// POST — owner replies to a customer review
+// POST, owner replies to a customer review
 // ----------------------------------------------------------
 function handle_reply_review(): void {
     $user     = require_role('owner');
@@ -134,7 +134,7 @@ function handle_reply_review(): void {
 }
 
 // ----------------------------------------------------------
-// POST — delete own review (or admin can delete any)
+// POST, delete own review (or admin can delete any)
 // ----------------------------------------------------------
 function handle_delete_review(): void {
     $user = require_login();

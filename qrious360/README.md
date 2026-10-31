@@ -1,4 +1,4 @@
-# DishCraft — Hotel Menu Platform with 3D Dish Models
+# DishCraft: Hotel Menu Platform with 3D Dish Models
 
 A multi-role web app for hotels: owners upload food photos that become rotating 3D relief models, customers browse the menu, favorite dishes, and leave reviews, and an admin oversees everything.
 
@@ -46,7 +46,7 @@ xampp/htdocs/dishcraft-api/
 
 Make sure the `uploads/` folder is writable (on Linux/Mac: `chmod 755 uploads`).
 
-Verify the API is reachable: open `http://localhost/dishcraft-api/` — you should see a JSON response listing the endpoints.
+Verify the API is reachable: open `http://localhost/dishcraft-api/`: you should see a JSON response listing the endpoints.
 
 ### 4. Run the React frontend
 From the `frontend/` folder:
@@ -83,7 +83,7 @@ Each dish stores three relief parameters alongside its photo: `relief_depth`, `r
 5. Each plane vertex is displaced along Z by its corresponding luminance value × `relief_depth`.
 6. The original image is also applied as the surface texture.
 
-The result is a sculpted bas-relief — bright areas push forward, dark areas recede. It's the same principle as a 3D-printed lithophane, but rendered live in WebGL with proper lighting and shadows. The owner can fine-tune the parameters per dish for the best visual effect (creamy soups need different settings than a textured pizza).
+The result is a sculpted bas-relief: bright areas push forward, dark areas recede. It's the same principle as a 3D-printed lithophane, but rendered live in WebGL with proper lighting and shadows. The owner can fine-tune the parameters per dish for the best visual effect (creamy soups need different settings than a textured pizza).
 
 ---
 
@@ -92,31 +92,31 @@ The result is a sculpted bas-relief — bright areas push forward, dark areas re
 All endpoints return JSON. Auth is session-based (cookies); the frontend sends `credentials: 'include'`.
 
 ### Auth (`/auth.php`)
-- `POST ?action=login` — `{ email, password }` → `{ user }`
-- `POST ?action=register` — `{ name, email, password, role, hotel_name? }`
+- `POST ?action=login`: `{ email, password }` → `{ user }`
+- `POST ?action=register`: `{ name, email, password, role, hotel_name? }`
 - `POST ?action=logout`
-- `GET  ?action=me` — current session user
+- `GET  ?action=me`: current session user
 
 ### Dishes (`/api/dishes.php`)
-- `GET  ?action=list` — public, all available dishes
-- `GET  ?action=get&id=N` — single dish + reviews
-- `GET  ?action=mine` — owner/admin only, my dishes (admin sees all)
-- `POST ?action=create` — multipart, owner/admin
-- `POST ?action=update` — multipart, owner/admin
-- `POST ?action=delete` — `{ id }`, owner/admin
+- `GET  ?action=list`: public, all available dishes
+- `GET  ?action=get&id=N`: single dish + reviews
+- `GET  ?action=mine`: owner/admin only, my dishes (admin sees all)
+- `POST ?action=create`: multipart, owner/admin
+- `POST ?action=update`: multipart, owner/admin
+- `POST ?action=delete`: `{ id }`, owner/admin
 
 ### Social (`/api/social.php`)
-- `GET  ?action=list` — customer's favorites
-- `POST ?action=toggle` — `{ dish_id }`
-- `POST ?action=review_add` — `{ dish_id, rating, comment }`
-- `POST ?action=review_del` — `{ review_id }`
+- `GET  ?action=list`: customer's favorites
+- `POST ?action=toggle`: `{ dish_id }`
+- `POST ?action=review_add`: `{ dish_id, rating, comment }`
+- `POST ?action=review_del`: `{ review_id }`
 
 ### Admin (`/api/admin.php`)
-- `GET  ?action=stats` — system counts
-- `GET  ?action=users` — all users
-- `POST ?action=approve` — `{ user_id, approved }`
-- `POST ?action=set_role` — `{ user_id, role }`
-- `POST ?action=delete_user` — `{ user_id }`
+- `GET  ?action=stats`: system counts
+- `GET  ?action=users`: all users
+- `POST ?action=approve`: `{ user_id, approved }`
+- `POST ?action=set_role`: `{ user_id, role }`
+- `POST ?action=delete_user`: `{ user_id }`
 
 ---
 
@@ -168,13 +168,13 @@ dishcraft/
 
 ## Customizing
 
-**DB credentials** — edit `backend/config/db.php`. Default is XAMPP's `root` / empty password.
+**DB credentials**: edit `backend/config/db.php`. Default is XAMPP's `root` / empty password.
 
-**API URL** — if you put the backend somewhere other than `http://localhost/dishcraft-api`, change `API_BASE` in `frontend/src/api/client.js`.
+**API URL**: if you put the backend somewhere other than `http://localhost/dishcraft-api`, change `API_BASE` in `frontend/src/api/client.js`.
 
-**CORS allowed origins** — edit the `$allowed` array in `backend/config/bootstrap.php` if you deploy the frontend somewhere else.
+**CORS allowed origins**: edit the `$allowed` array in `backend/config/bootstrap.php` if you deploy the frontend somewhere else.
 
-**Owner approval** — by default, new owner accounts must be approved by an admin before they can log in. To disable, set `$approved = 1` in `backend/api/auth.php` `handle_register()`.
+**Owner approval**: by default, new owner accounts must be approved by an admin before they can log in. To disable, set `$approved = 1` in `backend/api/auth.php` `handle_register()`.
 
 ---
 

@@ -4,7 +4,7 @@
  *
  * What it does per video:
  *   - H.264 CRF26, preset fast  (good quality, ~1–3 MB for a 30s clip)
- *   - -movflags +faststart       (moov atom at front — browser seeks before full download)
+ *   - -movflags +faststart       (moov atom at front, browser seeks before full download)
  *   - scale to max 960×540       (matches frame-extraction canvas in Dish360Viewer)
  *   - strip audio (-an)          (360 dish videos are always muted)
  *
@@ -12,7 +12,7 @@
  *   php tools/migrate_videos_to_web.php
  *   DRY_RUN=1 php tools/migrate_videos_to_web.php     (print plan, no changes)
  *
- * Usage (web — requires MIGRATE_KEY env var on the server):
+ * Usage (web, requires MIGRATE_KEY env var on the server):
  *   /tools/migrate_videos_to_web.php?key=<MIGRATE_KEY>
  *   /tools/migrate_videos_to_web.php?key=<MIGRATE_KEY>&dry=1
  */
@@ -41,7 +41,7 @@ function find_ffmpeg(): string {
     foreach ($candidates as $p) {
         if ($p && is_executable($p)) return $p;
     }
-    // Search PATH — Unix and Windows
+    // Search PATH, Unix and Windows
     $isWin = DIRECTORY_SEPARATOR === '\\';
     $out   = $isWin
         ? trim((string) shell_exec('where ffmpeg 2>NUL'))
@@ -97,7 +97,7 @@ foreach ($files as $srcPath) {
 
     if ($code !== 0 || !file_exists($tmpPath) || filesize($tmpPath) < 1000) {
         @unlink($tmpPath);
-        $results['failed'][] = sprintf('%s — FFmpeg error (exit %d)', $srcName, $code);
+        $results['failed'][] = sprintf('%s, FFmpeg error (exit %d)', $srcName, $code);
         continue;
     }
 
@@ -106,7 +106,7 @@ foreach ($files as $srcPath) {
     // Only replace if the re-encoded file is actually smaller (safety guard)
     if ($newSize >= $origSize) {
         @unlink($tmpPath);
-        $results['skipped'][] = sprintf('%s — already optimised (%s)', $srcName, fmt_size($origSize));
+        $results['skipped'][] = sprintf('%s, already optimised (%s)', $srcName, fmt_size($origSize));
         continue;
     }
 

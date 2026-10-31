@@ -56,7 +56,7 @@ function handle_request(): void {
     $dishes_requested = $packs * 10;
     $amount_lkr       = $packs * 500;
 
-    // Prevent spamming — only one pending request at a time
+    // Prevent spamming, only one pending request at a time
     $chk = db()->prepare("SELECT id FROM subscriptions WHERE owner_id = ? AND status = 'pending'");
     $chk->execute([$user['id']]);
     if ($chk->fetch()) fail('You already have a pending subscription request. Wait for admin approval.', 409);
@@ -67,10 +67,10 @@ function handle_request(): void {
     ");
     $stmt->execute([$user['id'], $dishes_requested, $amount_lkr]);
 
-    send_json(['message' => 'Request submitted — waiting for admin approval.'], 201);
+    send_json(['message' => 'Request sent. We will let you know once the admin approves it.'], 201);
 }
 
-// Owner: pay with card — auto-approve, no admin needed
+// Owner: pay with card, auto-approve, no admin needed
 function handle_pay(): void {
     $user = require_role('owner');
     if (method() !== 'POST') fail('POST required', 405);
@@ -80,7 +80,7 @@ function handle_pay(): void {
     $dishes_requested = $packs * 10;
     $amount_lkr       = $packs * 500;
 
-    // Basic card validation (format only — no real processing)
+    // Basic card validation (format only, no real processing)
     $card_number = preg_replace('/\s+/', '', $data['card_number'] ?? '');
     $card_name   = trim($data['card_name'] ?? '');
     $card_expiry = trim($data['card_expiry'] ?? '');
@@ -88,7 +88,7 @@ function handle_pay(): void {
 
     if (!preg_match('/^\d{13,19}$/', $card_number)) fail('Invalid card number');
     if (!$card_name)                                 fail('Cardholder name required');
-    if (!preg_match('/^(0[1-9]|1[0-2])\/\d{2}$/', $card_expiry)) fail('Invalid expiry — use MM/YY');
+    if (!preg_match('/^(0[1-9]|1[0-2])\/\d{2}$/', $card_expiry)) fail('Invalid expiry date. Please use MM/YY.');
     if (!preg_match('/^\d{3,4}$/', $card_cvv))      fail('Invalid CVV');
 
     // Check expiry not in the past

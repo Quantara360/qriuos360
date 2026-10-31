@@ -1,4 +1,4 @@
-SETUP NOTE — Important first step after extracting
+SETUP NOTE: Important first step after extracting
 ====================================================
 
 A couple of files were renamed in the zip so Windows could extract them.
@@ -10,7 +10,7 @@ After you extract the archive, rename them back:
    dishcraft/backend/uploads/UPLOADS_HTACCESS.txt
        → rename to: .htaccess
 
-(The .htaccess one is the most important — it blocks PHP execution
+(The .htaccess one is the most important: it blocks PHP execution
 inside the uploads folder for security. The .gitignore is only needed
 if you put the project under git.)
 

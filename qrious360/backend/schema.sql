@@ -7,7 +7,7 @@ CREATE DATABASE IF NOT EXISTS dishcraft CHARACTER SET utf8mb4 COLLATE utf8mb4_un
 USE dishcraft;
 
 -- ============================================================
--- USERS — three roles: admin, owner, customer
+-- USERS, three roles: admin, owner, customer
 -- ============================================================
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS favorites;
@@ -27,7 +27,7 @@ CREATE TABLE users (
 );
 
 -- ============================================================
--- DISHES — owned by a hotel owner
+-- DISHES, owned by a hotel owner
 -- ============================================================
 CREATE TABLE dishes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,7 +56,7 @@ CREATE TABLE dish_ingredients (
 );
 
 -- ============================================================
--- FAVORITES — customer ↔ dish
+-- FAVORITES, customer ↔ dish
 -- ============================================================
 CREATE TABLE favorites (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -69,7 +69,7 @@ CREATE TABLE favorites (
 );
 
 -- ============================================================
--- REVIEWS — customer leaves a rating + comment per dish
+-- REVIEWS, customer leaves a rating + comment per dish
 -- ============================================================
 CREATE TABLE reviews (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -84,7 +84,7 @@ CREATE TABLE reviews (
 );
 
 -- ============================================================
--- SEED — default admin account
+-- SEED, default admin account
 -- email:    admin@dishcraft.local
 -- password: admin123
 -- (password hash below is bcrypt of 'admin123')

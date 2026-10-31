@@ -127,7 +127,7 @@ function update_db_references(string $oldName, string $newName): void {
         } catch (\Throwable) {}
     }
 
-    // pages table: content is JSON — do a string replace inside the JSON blob
+    // pages table: content is JSON, do a string replace inside the JSON blob
     $stmt = $pdo->query("SELECT page_key, content FROM pages");
     foreach ($stmt->fetchAll() as $row) {
         if (!str_contains($row['content'], $oldName)) continue;

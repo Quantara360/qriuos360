@@ -18,7 +18,7 @@ $DEFAULTS = [
         'eyebrow'     => 'Photogrammetric menu studio · est. MMXXVI',
         'heading'     => 'Every dish, sculpted',
         'heading_em'  => 'in three dimensions.',
-        'lead'        => 'DishCraft turns flat food photographs into rotating volumetric models — luminance becomes elevation, and your menu becomes a study in form. Browse, favorite, review.',
+        'lead'        => 'DishCraft turns flat food photographs into rotating volumetric models, luminance becomes elevation, and your menu becomes a study in form. Browse, favorite, review.',
         'step1_num'   => '01', 'step1_title' => 'Upload', 'step1_desc' => 'Hotel owners upload a single food photograph.',
         'step2_num'   => '02', 'step2_title' => 'Sculpt',  'step2_desc' => 'Pixel luminance becomes vertex displacement.',
         'step3_num'   => '03', 'step3_title' => 'Serve',   'step3_desc' => 'Customers explore each dish in three dimensions.',
@@ -27,7 +27,7 @@ $DEFAULTS = [
     'about' => [
         'heading'        => 'About Dish',
         'heading_em'     => 'Craft.',
-        'intro'          => 'We are building the future of restaurant menus — one dish at a time.',
+        'intro'          => 'We are building the future of restaurant menus, one dish at a time.',
         'mission'        => 'Our mission is to transform the way people discover and experience food, by bringing every dish to life in three dimensions.',
         'feature1_title' => '3D Visualization',
         'feature1_text'  => 'Every dish is rendered as a volumetric model using photogrammetric displacement techniques.',
